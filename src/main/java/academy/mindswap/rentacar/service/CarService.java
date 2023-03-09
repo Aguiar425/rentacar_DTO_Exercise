@@ -15,5 +15,7 @@ public interface CarService {
 
     CarDto updateCar(CarDto carDto, String newBrand, String newModel, int newPrice);
 
+    Car updateCar(Car car);
+
     void deleteCar(Long carId);
 }
