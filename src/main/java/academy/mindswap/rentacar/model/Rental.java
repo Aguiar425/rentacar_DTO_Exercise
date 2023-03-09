@@ -13,7 +13,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "rentals")
+@Entity
 @Table(name = "rentals")
 public class Rental {
 

@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "cars")
+@Entity
 @Table(name = "cars")
 public class Car {
 
