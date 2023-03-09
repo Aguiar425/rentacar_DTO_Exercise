@@ -3,8 +3,6 @@ package academy.mindswap.rentacar.converter;
 import academy.mindswap.rentacar.dto.UserCreatedDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.model.User;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

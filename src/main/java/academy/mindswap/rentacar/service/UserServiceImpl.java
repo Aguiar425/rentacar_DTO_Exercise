@@ -54,8 +54,29 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto) {
-        return null;
+    public UserDto updateUser(UserDto userDto, String newFirstName, String newLastName, String newEmail) {
+
+        User updatedUser = userConverter.fromUserDtoToUserEntity(userDto);
+        if(newFirstName.equals(null)){
+            updatedUser.setFirstName(userDto.getFirstName());
+        } else {
+            updatedUser.setFirstName(newFirstName);
+        }
+
+        if(newLastName.equals(null)){
+            updatedUser.setLastName(userDto.getLastName());
+        } else {
+            updatedUser.setLastName(newLastName);
+        }
+
+        if(newEmail.equals(null)){
+            updatedUser.setEmail(userDto.getEmail());
+        } else {
+            updatedUser.setEmail(newEmail);
+        }
+
+        UserDto updatedUserDto = userConverter.fromUserEntityToUserDto(updatedUser);
+        return updatedUserDto;
     }
 
     @Override

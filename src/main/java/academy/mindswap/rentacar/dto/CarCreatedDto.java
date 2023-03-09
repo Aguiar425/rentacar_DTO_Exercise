@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
@@ -15,6 +16,6 @@ public class CarCreatedDto {
     @NotBlank(message = "Must have model")
     private String model;
 
-    @NotBlank(message = "Must have a price")
+    @NotNull(message = "Must have a price")
     private int pricePerDay;
 }

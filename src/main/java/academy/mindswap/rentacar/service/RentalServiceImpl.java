@@ -27,6 +27,7 @@ public class RentalServiceImpl implements RentalService{
     public RentalDto createRental(RentalCreatedDto rentalCreatedDto) {
     //TODO logic for cars and users
 
+
         Rental rental = rentalConverter.fromRentalCreatedDtoToEntity(rentalCreatedDto);
         rental = rentalRepository.save(rental);
         return rentalConverter.fromRentalEntityToRentalDto(rental);
