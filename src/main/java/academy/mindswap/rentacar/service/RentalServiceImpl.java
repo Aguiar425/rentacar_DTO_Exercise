@@ -10,6 +10,7 @@ import academy.mindswap.rentacar.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -49,7 +50,7 @@ public class RentalServiceImpl implements RentalService{
     }
 
     @Override
-    public RentalDto updateRental(RentalDto rentalDto, String newStartDate, String newEndDate, List<User> newUsers, List<Car> newCars) {
+    public RentalDto updateRental(RentalDto rentalDto, LocalDate newStartDate, LocalDate newEndDate, List<User> newUsers, List<Car> newCars) {
         Rental updateRental = rentalConverter.fromRentalDtoToRentalEntity(rentalDto);
         if(newStartDate.equals(null)){
             updateRental.setStartDate(rentalDto.getStartDate());
