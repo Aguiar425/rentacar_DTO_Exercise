@@ -3,6 +3,9 @@ package academy.mindswap.rentacar.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -31,4 +34,7 @@ public class User {
 
     @Column(nullable = false)
     private String role;
+
+    @ManyToOne (targetEntity = Rental.class)
+    private List<Rental> rentals = new ArrayList<>();
 }
