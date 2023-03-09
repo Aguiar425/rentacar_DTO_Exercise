@@ -3,7 +3,9 @@ package academy.mindswap.rentacar.converter;
 import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.model.Rental;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RentalConverter {
 
     public RentalDto fromRentalEntityToRentalDto(Rental rental){

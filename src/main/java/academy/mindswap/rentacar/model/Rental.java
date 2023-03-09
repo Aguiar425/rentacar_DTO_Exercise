@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "rentals")
 @Table(name = "rentals")
 public class Rental {
 
@@ -26,9 +26,9 @@ public class Rental {
     @Column(nullable = false)
     private String endDate;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "rentals", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "cars", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "rentals", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Car> cars = new ArrayList<>();
 }
