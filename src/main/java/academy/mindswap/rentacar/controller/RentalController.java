@@ -24,20 +24,20 @@ public class RentalController {
         this.rentalService = rentalService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<RentalDto>> myFirstEndPoint(){
+    @GetMapping("/all")
+    public ResponseEntity<List<RentalDto>> getAllRentals(){
         List<RentalDto> rentals = rentalService.getAllRentals();
         return new ResponseEntity<>(rentals, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RentalDto> getById(@PathVariable Long id){
+    public ResponseEntity<RentalDto> getRentalById(@PathVariable Long id){
         RentalDto rentalDto = rentalService.getRentalById(id);
         return new ResponseEntity<>(rentalDto, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<RentalDto> createUser(@Valid @RequestBody RentalCreatedDto rentalCreatedDto, BindingResult bindingResult){
+    public ResponseEntity<RentalDto> createRental(@Valid @RequestBody RentalCreatedDto rentalCreatedDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             List<FieldError> fieldErrors = bindingResult.getFieldErrors();
             for (FieldError error : fieldErrors){
