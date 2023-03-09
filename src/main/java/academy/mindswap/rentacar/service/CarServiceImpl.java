@@ -33,21 +33,25 @@ public class CarServiceImpl implements CarService{
     @Override
     public CarDto getCarById(Long carId) {
         Car car = carRepository.getReferenceById(carId);
-        return carConverter.fr;
+        return carConverter.fromCarEntityToCarDto(car);
     }
 
     @Override
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public List<CarDto> getAllCars() {
+        List<Car> cars = carRepository.findAll();
+        List<CarDto> carDtos = cars.stream()
+                .map(carConverter::fromCarEntityToCarDto)
+                .toList();
+        return carDtos;
     }
 
     @Override
-    public Car updateCar(Car car) {
+    public CarDto updateCar(CarDto carDto) {
         return null;
     }
 
     @Override
     public void deleteCar(Long carId) {
-
+        carRepository.deleteById(carId);
     }
 }
