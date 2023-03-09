@@ -26,12 +26,17 @@ public class CarController {
         this.carService = carService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<CarDto>> myFirstEndPoint(){
+    @GetMapping("/all")
+    public ResponseEntity<List<CarDto>> getAllCars(){
         List<CarDto> cars = carService.getAllCars();
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CarDto> getCarById(@PathVariable Long id){
+        CarDto carDto = carService.getCarById(id);
+        return new ResponseEntity<>(carDto, HttpStatus.OK);
+    }
     @PostMapping
     public ResponseEntity<CarDto> createCar(@Valid @RequestBody CarCreatedDto carCreatedDto, BindingResult bindingResult){
         if(bindingResult.hasErrors()){

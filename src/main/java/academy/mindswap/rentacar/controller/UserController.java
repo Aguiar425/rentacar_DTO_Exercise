@@ -25,14 +25,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<UserDto>> myFirstEndPoint(){
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDto>> getAllUsers(){
         List<UserDto> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable Long id){
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id){
         UserDto userDto = userService.getUserById(id);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
