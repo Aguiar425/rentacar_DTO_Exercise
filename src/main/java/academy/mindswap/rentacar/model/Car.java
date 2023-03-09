@@ -23,4 +23,7 @@ public class Car {
     @Column(nullable = false)
     private String model;
 
+    @Column(nullable = false)
+    private int pricePerDay;
+
 }

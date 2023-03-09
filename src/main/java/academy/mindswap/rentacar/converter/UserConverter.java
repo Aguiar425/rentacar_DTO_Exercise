@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConverter {
 
-    @Autowired
-    ObjectMapper objectMapper;
+/*    @Autowired
+    ObjectMapper objectMapper;*/
 
     public UserDto fromUserEntityToUserDto(User user){
 

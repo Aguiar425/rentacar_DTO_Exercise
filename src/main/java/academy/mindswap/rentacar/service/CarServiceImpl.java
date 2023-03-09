@@ -1,5 +1,8 @@
 package academy.mindswap.rentacar.service;
 
+import academy.mindswap.rentacar.converter.CarConverter;
+import academy.mindswap.rentacar.dto.CarCreatedDto;
+import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
 import academy.mindswap.rentacar.repository.UserRepository;
@@ -12,20 +15,25 @@ import java.util.List;
 public class CarServiceImpl implements CarService{
 
     private CarRepository carRepository;
+    private CarConverter carConverter;
 
     @Autowired
-    public CarServiceImpl(CarRepository carRepository){
+    public CarServiceImpl(CarRepository carRepository, CarConverter carConverter){
         this.carRepository = carRepository;
+        this.carConverter = carConverter;
     }
 
     @Override
-    public Car createCar(Car car) {
-        return carRepository.save(car);
+    public CarDto createCar(CarCreatedDto carCreatedDto) {
+        Car savedCar = carConverter.fromCarCreatedDtoToEntity(carCreatedDto);
+        savedCar = carRepository.save(savedCar);
+        return carConverter.fromCarEntityToCarDto(savedCar);
     }
 
     @Override
-    public Car getCarById(Long carId) {
-        return null;
+    public CarDto getCarById(Long carId) {
+        Car car = carRepository.getReferenceById(carId);
+        return carConverter.fr;
     }
 
     @Override
