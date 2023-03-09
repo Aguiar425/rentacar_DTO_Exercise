@@ -26,9 +26,9 @@ public class Rental {
     @Column(nullable = false)
     private String endDate;
 
-    @OneToMany(mappedBy = "rentals", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = User.class)
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "rentals", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Car.class)
     private List<Car> cars = new ArrayList<>();
 }

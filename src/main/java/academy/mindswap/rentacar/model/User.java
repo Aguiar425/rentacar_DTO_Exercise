@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "users")
+@Entity
 @Table(name = "users")
 public class User {
 
@@ -35,6 +35,6 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @ManyToOne (targetEntity = Rental.class)
+    @ManyToMany (mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Rental> rentals = new ArrayList<>();
 }
