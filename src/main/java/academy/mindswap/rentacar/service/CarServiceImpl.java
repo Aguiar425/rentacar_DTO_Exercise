@@ -5,7 +5,6 @@ import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
-import academy.mindswap.rentacar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +45,29 @@ public class CarServiceImpl implements CarService{
     }
 
     @Override
-    public CarDto updateCar(CarDto carDto) {
-        return null;
+    public CarDto updateCar(CarDto carDto, String newBrand, String newModel, int newPrice) {
+
+        Car updatedCar = carConverter.fromCarDtoToCarEntity(carDto);
+        if(newBrand.equals(null)){
+            updatedCar.setBrand(carDto.getBrand());
+        } else {
+            updatedCar.setBrand(newBrand);
+        }
+
+        if(newModel.equals(null)){
+            updatedCar.setModel(carDto.getModel());
+        } else {
+            updatedCar.setModel(newModel);
+        }
+
+        if(newPrice <= 0){
+            updatedCar.setPricePerDay(carDto.getPricePerDay());
+        } else {
+            updatedCar.setPricePerDay(newPrice);
+        }
+
+        CarDto updatedCarDto = carConverter.fromCarEntityToCarDto(updatedCar);
+        return updatedCarDto;
     }
 
     @Override

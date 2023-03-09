@@ -13,7 +13,7 @@ public interface CarService {
 
     List<CarDto> getAllCars();
 
-    CarDto updateCar(CarDto car);
+    CarDto updateCar(CarDto carDto, String newBrand, String newModel, int newPrice);
 
     void deleteCar(Long carId);
 }

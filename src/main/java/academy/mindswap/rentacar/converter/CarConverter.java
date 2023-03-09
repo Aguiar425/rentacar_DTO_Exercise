@@ -13,11 +13,11 @@ public class CarConverter {
                 .build();
     }
 
-    public Car fromCarDtoToUserEntity(Car car){
+    public Car fromCarDtoToCarEntity(CarDto carDto){
         return Car.builder()
-                .model(car.getModel())
-                .brand(car.getBrand())
-                .pricePerDay(car.getPricePerDay())
+                .model(carDto.getModel())
+                .brand(carDto.getBrand())
+                .pricePerDay(carDto.getPricePerDay())
                 .build();
     }
 
