@@ -27,8 +27,8 @@ public class CarController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Car>> myFirstEndPoint(){
-        List<Car> cars = carService.getAllCars();
+    public ResponseEntity<List<CarDto>> myFirstEndPoint(){
+        List<CarDto> cars = carService.getAllCars();
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class CarController {
             }
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        CarDto savedCar = userService.createUser(userCreatedDto);
-        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+        CarDto savedCar = carService.createCar(carCreatedDto);
+        return new ResponseEntity<>(savedCar, HttpStatus.OK);
     }
 }
