@@ -3,7 +3,9 @@ package academy.mindswap.rentacar.converter;
 import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.model.Car;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CarConverter {
     public CarDto fromCarEntityToCarDto(Car car){
         return CarDto.builder()

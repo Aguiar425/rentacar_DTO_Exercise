@@ -7,6 +7,9 @@ import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -48,5 +51,15 @@ public class CarController {
         }
         CarDto savedCar = carService.createCar(carCreatedDto);
         return new ResponseEntity<>(savedCar, HttpStatus.OK);
+    }
+
+    @PutMapping
+    @Modifying
+    @Query("UPDATE cars c SET brand = newBrand, model = newModel, price = newPrice WHERE id = targetId")
+    public ResponseEntity<CarDto> updateCar(@Param("targetId") Long carId, @Param("newBrand") String newBrand,
+                                            @Param("newModel") String  newModel, @Param("newPrice") int newPrice){
+        CarDto carDtoUpdate = carService.getCarById(carId);
+        carDtoUpdate = carService.updateCar(carDtoUpdate, newBrand, newModel, newPrice);
+        return new ResponseEntity<>(carDtoUpdate, HttpStatus.OK);
     }
 }
