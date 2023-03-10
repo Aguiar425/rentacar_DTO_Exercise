@@ -1,6 +1,8 @@
 package academy.mindswap.rentacar.service;
 
+import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.converter.RentalConverter;
+import academy.mindswap.rentacar.converter.UserConverter;
 import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.dto.RentalUpdateDto;
@@ -21,11 +23,15 @@ import java.util.List;
 public class RentalServiceImpl implements RentalService {
     private RentalRepository rentalRepository;
     private RentalConverter rentalConverter;
+    private UserConverter userConverter;
+    private CarConverter carConverter;
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter) {
+    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter, UserConverter userConverter, CarConverter carConverter) {
         this.rentalRepository = rentalRepository;
         this.rentalConverter = rentalConverter;
+        this.userConverter = userConverter;
+        this.carConverter = carConverter;
     }
 
     @Override
@@ -71,7 +77,9 @@ public class RentalServiceImpl implements RentalService {
         }
 
         if (rentalUpdateDto.getCars() != null) {
-            rentalToUpdate.setCars(rentalUpdateDto.getCars());
+
+
+            rentalToUpdate.setCars();
         }
 
         Rental updatedRental = rentalRepository.save(rentalToUpdate);
