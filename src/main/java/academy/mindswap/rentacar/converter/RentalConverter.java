@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RentalConverter {
-
+    @Autowired
+    UserLongConverter userLongConverter;
+    @Autowired
+    CarLongConverter carLongConverter;
 
     public RentalDto fromRentalEntityToRentalDto(Rental rental){
         return RentalDto.builder()
@@ -33,8 +36,8 @@ public class RentalConverter {
         return Rental.builder()
                 .startDate(rentalCreatedDto.getStartDate())
                 .endDate(rentalCreatedDto.getEndDate())
-                .user(rentalCreatedDto.getUser())
-                .car(rentalCreatedDto.getCar())
+                .user(userLongConverter.longToUser(rentalCreatedDto.getUser()))
+                .car(carLongConverter.longToCar(rentalCreatedDto.getCar()))
                 .build();
     }
 }
