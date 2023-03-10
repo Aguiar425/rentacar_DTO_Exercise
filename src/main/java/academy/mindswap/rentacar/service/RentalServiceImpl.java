@@ -1,8 +1,6 @@
 package academy.mindswap.rentacar.service;
 
-import academy.mindswap.rentacar.converter.CarConverter;
-import academy.mindswap.rentacar.converter.RentalConverter;
-import academy.mindswap.rentacar.converter.UserConverter;
+import academy.mindswap.rentacar.converter.*;
 import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.dto.RentalUpdateDto;
@@ -17,21 +15,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class RentalServiceImpl implements RentalService {
     private RentalRepository rentalRepository;
     private RentalConverter rentalConverter;
-    private UserConverter userConverter;
-    private CarConverter carConverter;
+    private UserListConverter userListConverter;
+    private CarListConverter carListConverter;
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter, UserConverter userConverter, CarConverter carConverter) {
+    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter, UserListConverter userListConverter, CarListConverter carListConverter) {
         this.rentalRepository = rentalRepository;
         this.rentalConverter = rentalConverter;
-        this.userConverter = userConverter;
-        this.carConverter = carConverter;
+        this.userListConverter = userListConverter;
+        this.carListConverter = carListConverter;
     }
 
     @Override
@@ -73,13 +72,15 @@ public class RentalServiceImpl implements RentalService {
         }
 
         if (rentalUpdateDto.getUsers() != null) {
-            rentalToUpdate.setUsers(rentalUpdateDto.getUsers());
+            List<User> userList;
+            userList = userListConverter.fromDtoListToEntityList(rentalUpdateDto.getUsers());
+            rentalToUpdate.setUsers(userList);
         }
 
         if (rentalUpdateDto.getCars() != null) {
-
-
-            rentalToUpdate.setCars();
+            List<Car> carList;
+            carList = carListConverter.fromDtoListToEntityList(rentalUpdateDto.getCars());
+            rentalToUpdate.setCars(carList);
         }
 
         Rental updatedRental = rentalRepository.save(rentalToUpdate);
