@@ -24,8 +24,8 @@ public class RentalCreatedDto {
     private LocalDate endDate;
 
     @Column
-    private List<User> users = new ArrayList<>();
+    private User user;
 
     @Column
-    private List<Car> cars = new ArrayList<>();
+    private Car car;
 }

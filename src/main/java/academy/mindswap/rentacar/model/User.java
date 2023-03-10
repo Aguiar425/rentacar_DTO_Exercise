@@ -35,6 +35,6 @@ public class User {
     @Column(nullable = false)
     private String role;
 
-    @ManyToMany (mappedBy = "users", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "rentals", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Rental> rentals = new ArrayList<>();
 }

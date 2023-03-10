@@ -23,8 +23,9 @@ public class RentalUpdateDto {
     private LocalDate endDate;
 
     @Column
-    private List<UserDto> users = new ArrayList<>();
+    private User user;
 
     @Column
-    private List<CarDto> cars = new ArrayList<>();
+    private Car car;
 }
+

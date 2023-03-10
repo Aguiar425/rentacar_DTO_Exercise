@@ -22,15 +22,13 @@ import java.util.List;
 public class RentalServiceImpl implements RentalService {
     private RentalRepository rentalRepository;
     private RentalConverter rentalConverter;
-    private UserListConverter userListConverter;
-    private CarListConverter carListConverter;
+
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter, UserListConverter userListConverter, CarListConverter carListConverter) {
+    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter) {
         this.rentalRepository = rentalRepository;
         this.rentalConverter = rentalConverter;
-        this.userListConverter = userListConverter;
-        this.carListConverter = carListConverter;
+
     }
 
     @Override
@@ -71,16 +69,12 @@ public class RentalServiceImpl implements RentalService {
             rentalToUpdate.setEndDate(rentalUpdateDto.getEndDate());
         }
 
-        if (rentalUpdateDto.getUsers().size() > 0) {
-            List<User> userList;
-            userList = userListConverter.fromDtoListToEntityList(rentalUpdateDto.getUsers());
-            rentalToUpdate.setUsers(userList);
+        if (rentalUpdateDto.getUser() != null) {
+            rentalToUpdate.setUser(rentalUpdateDto.getUser());
         }
 
-        if (rentalUpdateDto.getCars().size() > 0) {
-            List<Car> carList;
-            carList = carListConverter.fromDtoListToEntityList(rentalUpdateDto.getCars());
-            rentalToUpdate.setCars(carList);
+        if (rentalUpdateDto.getCar() != null) {
+            rentalToUpdate.setCar(rentalUpdateDto.getCar());
         }
 
         Rental updatedRental = rentalRepository.save(rentalToUpdate);

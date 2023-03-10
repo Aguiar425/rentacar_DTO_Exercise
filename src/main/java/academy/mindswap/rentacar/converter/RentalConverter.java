@@ -10,17 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class RentalConverter {
 
-    @Autowired
-    private CarListConverter carListConverter;
-    @Autowired
-    private UserListConverter userListConverter;
 
     public RentalDto fromRentalEntityToRentalDto(Rental rental){
         return RentalDto.builder()
                 .startDate(rental.getStartDate())
                 .endDate(rental.getEndDate())
-                .users(userListConverter.fromEntityListToDtoList(rental.getUsers()))
-                .cars(carListConverter.fromEntityListToDtoList(rental.getCars()))
+                .user(rental.getUser())
+                .car(rental.getCar())
                 .build();
     }
 
@@ -28,8 +24,8 @@ public class RentalConverter {
         return Rental.builder()
                 .startDate(rentalDto.getStartDate())
                 .endDate(rentalDto.getEndDate())
-                .users(userListConverter.fromDtoListToEntityList(rentalDto.getUsers()))
-                .cars(carListConverter.fromDtoListToEntityList(rentalDto.getCars()))
+                .user(rentalDto.getUser())
+                .car(rentalDto.getCar())
                 .build();
     }
 
@@ -37,8 +33,8 @@ public class RentalConverter {
         return Rental.builder()
                 .startDate(rentalCreatedDto.getStartDate())
                 .endDate(rentalCreatedDto.getEndDate())
-                .users(rentalCreatedDto.getUsers())
-                .cars(rentalCreatedDto.getCars())
+                .user(rentalCreatedDto.getUser())
+                .car(rentalCreatedDto.getCar())
                 .build();
     }
 }
