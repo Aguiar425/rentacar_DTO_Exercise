@@ -24,8 +24,8 @@ public class RentalCreatedDto {
     private LocalDate endDate;
 
     @Column
-    private User user;
+    private Long user;
 
     @Column
-    private Car car;
+    private Long car;
 }

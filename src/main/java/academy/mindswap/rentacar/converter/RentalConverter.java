@@ -15,19 +15,19 @@ public class RentalConverter {
         return RentalDto.builder()
                 .startDate(rental.getStartDate())
                 .endDate(rental.getEndDate())
-                .user(rental.getUser())
-                .car(rental.getCar())
+                .user(rental.getUser().getFirstName() + " ".concat(rental.getUser().getLastName()))
+                .car(rental.getCar().getBrand() + " ".concat(rental.getCar().getModel()))
                 .build();
     }
 
-    public Rental fromRentalDtoToRentalEntity(RentalDto rentalDto){
-        return Rental.builder()
-                .startDate(rentalDto.getStartDate())
-                .endDate(rentalDto.getEndDate())
-                .user(rentalDto.getUser())
-                .car(rentalDto.getCar())
-                .build();
-    }
+//    public Rental fromRentalDtoToRentalEntity(RentalDto rentalDto){
+//        return Rental.builder()
+//                .startDate(rentalDto.getStartDate())
+//                .endDate(rentalDto.getEndDate())
+//                .user(rentalDto.getUser())
+//                .car(rentalDto.getCar())
+//                .build();
+//    }
 
     public Rental fromRentalCreatedDtoToEntity(RentalCreatedDto rentalCreatedDto){
         return Rental.builder()

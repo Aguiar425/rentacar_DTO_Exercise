@@ -29,7 +29,7 @@ public class Car {
     @Column(nullable = false)
     private int pricePerDay;
 
-    @OneToMany (mappedBy = "rentals", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany (mappedBy = "car", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private List<Rental> rentals = new ArrayList<>();
 
 }
