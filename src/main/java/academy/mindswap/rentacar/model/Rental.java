@@ -27,9 +27,9 @@ public class Rental {
     @Column(nullable = false)
     private LocalDate endDate;
 
-    @ManyToMany(targetEntity = User.class)
+    @ManyToMany(targetEntity = User.class, fetch = FetchType.EAGER)
     private List<User> users = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Car.class)
+    @ManyToMany(targetEntity = Car.class, fetch = FetchType.EAGER)
     private List<Car> cars = new ArrayList<>();
 }

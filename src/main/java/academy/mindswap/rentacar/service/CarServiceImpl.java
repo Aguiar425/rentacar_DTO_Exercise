@@ -52,16 +52,16 @@ public class CarServiceImpl implements CarService{
         Car carToUpdate = carRepository.findById(carId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No car found with ID: " + carId));
 
-        if(carToUpdate.getBrand() != null){
-            carUpdateDto.setBrand(carToUpdate.getBrand());
+        if(carUpdateDto.getBrand() != null){
+            carToUpdate.setBrand(carUpdateDto.getBrand());
         }
 
-        if(carToUpdate.getModel() != null){
-            carUpdateDto.setModel(carToUpdate.getModel());
+        if(carUpdateDto.getModel() != null){
+            carToUpdate.setModel(carUpdateDto.getModel());
         }
 
-        if(carToUpdate.getPricePerDay() <= 0){
-            carUpdateDto.setPricePerDay(carToUpdate.getPricePerDay());
+        if(carUpdateDto.getPricePerDay() <= 0){
+            carToUpdate.setPricePerDay(carUpdateDto.getPricePerDay());
         }
 
         Car updatedCar = carRepository.save(carToUpdate);
