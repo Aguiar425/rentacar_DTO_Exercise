@@ -27,5 +27,5 @@ public class RentalCreatedDto {
     private User user;
 
     @Column
-    private User car;
+    private Car car;
 }
