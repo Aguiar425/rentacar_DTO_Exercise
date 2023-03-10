@@ -3,30 +3,34 @@ package academy.mindswap.rentacar.service;
 import academy.mindswap.rentacar.converter.RentalConverter;
 import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
+import academy.mindswap.rentacar.dto.RentalUpdateDto;
+import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.model.Rental;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class RentalServiceImpl implements RentalService{
+public class RentalServiceImpl implements RentalService {
     private RentalRepository rentalRepository;
     private RentalConverter rentalConverter;
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter){
+    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter) {
         this.rentalRepository = rentalRepository;
         this.rentalConverter = rentalConverter;
     }
 
     @Override
     public RentalDto createRental(RentalCreatedDto rentalCreatedDto) {
-    //TODO logic for cars and users
+        //TODO logic for cars and users
 
 
         Rental rental = rentalConverter.fromRentalCreatedDtoToEntity(rentalCreatedDto);
@@ -50,33 +54,28 @@ public class RentalServiceImpl implements RentalService{
     }
 
     @Override
-    public RentalDto updateRental(RentalDto rentalDto, LocalDate newStartDate, LocalDate newEndDate, List<User> newUsers, List<Car> newCars) {
-        Rental updateRental = rentalConverter.fromRentalDtoToRentalEntity(rentalDto);
-        if(newStartDate.equals(null)){
-            updateRental.setStartDate(rentalDto.getStartDate());
-        } else {
-            updateRental.setStartDate(newStartDate);
+    public RentalDto updateRental(Long rentalId, RentalUpdateDto rentalUpdateDto) {
+        Rental rentalToUpdate = rentalRepository.findById(rentalId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No rental found with ID: " + rentalId));
+
+        if (rentalUpdateDto.getStartDate() != null) {
+            rentalToUpdate.setStartDate(rentalUpdateDto.getStartDate());
         }
 
-        if(newEndDate.equals(null)){
-            updateRental.setEndDate(rentalDto.getEndDate());
-        } else {
-            updateRental.setEndDate(newEndDate);
+        if (rentalUpdateDto.getEndDate() != null) {
+            rentalToUpdate.setEndDate(rentalUpdateDto.getEndDate());
         }
 
-        if(newUsers.equals(null)){
-            updateRental.setUsers(rentalDto.getUsers());
-        } else {
-            updateRental.setUsers(newUsers);
+        if (rentalUpdateDto.getUsers() != null) {
+            rentalToUpdate.setUsers(rentalUpdateDto.getUsers());
         }
 
-        if(newCars.equals(null)){
-            updateRental.setCars(rentalDto.getCars());
-        } else {
-            updateRental.setCars(newCars);
+        if (rentalUpdateDto.getCars() != null) {
+            rentalToUpdate.setCars(rentalUpdateDto.getCars());
         }
 
-        RentalDto updatedRentalDto = rentalConverter.fromRentalEntityToRentalDto(updateRental);
+        Rental updatedRental = rentalRepository.save(rentalToUpdate);
+        RentalDto updatedRentalDto = rentalConverter.fromRentalEntityToRentalDto(updatedRental);
         return updatedRentalDto;
     }
 
@@ -85,3 +84,4 @@ public class RentalServiceImpl implements RentalService{
         rentalRepository.deleteById(rentalId);
     }
 }
+

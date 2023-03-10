@@ -1,9 +1,6 @@
 package academy.mindswap.rentacar.service;
 
-import academy.mindswap.rentacar.dto.RentalCreatedDto;
-import academy.mindswap.rentacar.dto.RentalDto;
-import academy.mindswap.rentacar.dto.UserCreatedDto;
-import academy.mindswap.rentacar.dto.UserDto;
+import academy.mindswap.rentacar.dto.*;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.model.User;
 
@@ -17,7 +14,7 @@ public interface RentalService {
 
     List<RentalDto> getAllRentals();
 
-    RentalDto updateRental(RentalDto rentalDto, LocalDate newStartDate, LocalDate newEndDate, List<User> newUsers, List<Car> newCars);
+    RentalDto updateRental(Long rentalId, RentalUpdateDto rentalUpdateDto);
 
     void deleteRental(Long rentalId);
 }

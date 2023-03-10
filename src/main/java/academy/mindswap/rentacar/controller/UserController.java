@@ -2,6 +2,7 @@ package academy.mindswap.rentacar.controller;
 
 import academy.mindswap.rentacar.dto.UserCreatedDto;
 import academy.mindswap.rentacar.dto.UserDto;
+import academy.mindswap.rentacar.dto.UserUpdateDto;
 import academy.mindswap.rentacar.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,20 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         UserDto savedUser = userService.createUser(userCreatedDto);
-        return new ResponseEntity<>(savedUser, HttpStatus.OK);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError error : fieldErrors){
+                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        UserDto updatedUser = userService.updateUser(id, userUpdateDto);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 }

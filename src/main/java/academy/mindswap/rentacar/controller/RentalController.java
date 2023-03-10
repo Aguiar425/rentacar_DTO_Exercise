@@ -1,7 +1,6 @@
 package academy.mindswap.rentacar.controller;
 
-import academy.mindswap.rentacar.dto.RentalCreatedDto;
-import academy.mindswap.rentacar.dto.RentalDto;
+import academy.mindswap.rentacar.dto.*;
 import academy.mindswap.rentacar.service.RentalService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +45,20 @@ public class RentalController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         RentalDto savedRental = rentalService.createRental(rentalCreatedDto);
-        return new ResponseEntity<>(savedRental, HttpStatus.OK);
+        return new ResponseEntity<>(savedRental, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RentalDto> updateRental(@PathVariable Long id, @Valid @RequestBody RentalUpdateDto rentalUpdateDto, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError error : fieldErrors){
+                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        RentalDto updatedRental = rentalService.updateRental(id, rentalUpdateDto);
+        return new ResponseEntity<>(updatedRental, HttpStatus.OK);
     }
 }

@@ -3,10 +3,13 @@ package academy.mindswap.rentacar.service;
 import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
+import academy.mindswap.rentacar.dto.CarUpdateDto;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -45,27 +48,23 @@ public class CarServiceImpl implements CarService{
     }
 
     @Override
-    public CarDto updateCar(CarDto carDto, String newBrand, String newModel, int newPrice) {
+    public CarDto updateCar(Long carId, CarUpdateDto carUpdateDto) {
+        Car carToUpdate = carRepository.findById(carId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No car found with ID: " + carId));
 
-        Car updatedCar = carConverter.fromCarDtoToCarEntity(carDto);
-        if(newBrand.equals(null)){
-            updatedCar.setBrand(carDto.getBrand());
-        } else {
-            updatedCar.setBrand(newBrand);
+        if(carToUpdate.getBrand() != null){
+            carUpdateDto.setBrand(carToUpdate.getBrand());
         }
 
-        if(newModel.equals(null)){
-            updatedCar.setModel(carDto.getModel());
-        } else {
-            updatedCar.setModel(newModel);
+        if(carToUpdate.getModel() != null){
+            carUpdateDto.setModel(carToUpdate.getModel());
         }
 
-        if(newPrice <= 0){
-            updatedCar.setPricePerDay(carDto.getPricePerDay());
-        } else {
-            updatedCar.setPricePerDay(newPrice);
+        if(carToUpdate.getPricePerDay() <= 0){
+            carUpdateDto.setPricePerDay(carToUpdate.getPricePerDay());
         }
 
+        Car updatedCar = carRepository.save(carToUpdate);
         CarDto updatedCarDto = carConverter.fromCarEntityToCarDto(updatedCar);
         return updatedCarDto;
     }

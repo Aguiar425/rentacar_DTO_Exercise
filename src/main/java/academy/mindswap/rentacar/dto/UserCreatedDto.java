@@ -26,7 +26,7 @@ public class UserCreatedDto {
     private String password;
 
     @Size(min = 6, message = "Password must be at least 6 characters long")
-    @NotNull(message = "Must have a password")
+    @NotNull(message = "Must retype your password")
     private String retypedPassword;
 
     @NotBlank(message = "Must have a role")

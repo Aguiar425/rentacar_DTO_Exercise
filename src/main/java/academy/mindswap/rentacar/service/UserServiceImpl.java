@@ -3,10 +3,13 @@ package academy.mindswap.rentacar.service;
 import academy.mindswap.rentacar.converter.UserConverter;
 import academy.mindswap.rentacar.dto.UserCreatedDto;
 import academy.mindswap.rentacar.dto.UserDto;
+import academy.mindswap.rentacar.dto.UserUpdateDto;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -54,30 +57,27 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto updateUser(UserDto userDto, String newFirstName, String newLastName, String newEmail) {
+    public UserDto updateUser(Long userId, UserUpdateDto userUpdateDto) {
+        User userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found with ID: " + userId));
 
-        User updatedUser = userConverter.fromUserDtoToUserEntity(userDto);
-        if(newFirstName.equals(null)){
-            updatedUser.setFirstName(userDto.getFirstName());
-        } else {
-            updatedUser.setFirstName(newFirstName);
+        if (userUpdateDto.getFirstName() != null) {
+            userToUpdate.setFirstName(userUpdateDto.getFirstName());
         }
 
-        if(newLastName.equals(null)){
-            updatedUser.setLastName(userDto.getLastName());
-        } else {
-            updatedUser.setLastName(newLastName);
+        if (userUpdateDto.getLastName() != null) {
+            userToUpdate.setLastName(userUpdateDto.getLastName());
         }
 
-        if(newEmail.equals(null)){
-            updatedUser.setEmail(userDto.getEmail());
-        } else {
-            updatedUser.setEmail(newEmail);
+        if (userUpdateDto.getEmail() != null) {
+            userToUpdate.setEmail(userUpdateDto.getEmail());
         }
 
+        User updatedUser = userRepository.save(userToUpdate);
         UserDto updatedUserDto = userConverter.fromUserEntityToUserDto(updatedUser);
         return updatedUserDto;
     }
+
 
     @Override
     public void deleteUser(Long userId) {
