@@ -4,12 +4,15 @@ import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.model.Rental;
 import academy.mindswap.rentacar.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RentalConverter {
 
+    @Autowired
     private CarListConverter carListConverter;
+    @Autowired
     private UserListConverter userListConverter;
 
     public RentalDto fromRentalEntityToRentalDto(Rental rental){

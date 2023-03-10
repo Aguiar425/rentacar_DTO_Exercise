@@ -2,6 +2,7 @@ package academy.mindswap.rentacar.converter;
 
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 @Component
 public class UserListConverter {
 
+    @Autowired
     private UserConverter userConverter;
 
     public List<UserDto> fromEntityListToDtoList(List<User> userList) {
