@@ -71,13 +71,13 @@ public class RentalServiceImpl implements RentalService {
             rentalToUpdate.setEndDate(rentalUpdateDto.getEndDate());
         }
 
-        if (rentalUpdateDto.getUsers() != null) {
+        if (rentalUpdateDto.getUsers().size() > 0) {
             List<User> userList;
             userList = userListConverter.fromDtoListToEntityList(rentalUpdateDto.getUsers());
             rentalToUpdate.setUsers(userList);
         }
 
-        if (rentalUpdateDto.getCars() != null) {
+        if (rentalUpdateDto.getCars().size() > 0) {
             List<Car> carList;
             carList = carListConverter.fromDtoListToEntityList(rentalUpdateDto.getCars());
             rentalToUpdate.setCars(carList);

@@ -24,8 +24,8 @@ public class RentalDto {
     @Column(nullable = false)
     private LocalDate endDate;
 
-   /* @Column
-    private List<UserDto> users = new ArrayList<>();*/
+    @Column
+    private List<UserDto> users = new ArrayList<>();
 
     @Column
     private List<CarDto> cars = new ArrayList<>();

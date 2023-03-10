@@ -19,7 +19,7 @@ public class RentalConverter {
         return RentalDto.builder()
                 .startDate(rental.getStartDate())
                 .endDate(rental.getEndDate())
-                //.users(rental.getUsers())
+                .users(userListConverter.fromEntityListToDtoList(rental.getUsers()))
                 .cars(carListConverter.fromEntityListToDtoList(rental.getCars()))
                 .build();
     }
@@ -28,7 +28,7 @@ public class RentalConverter {
         return Rental.builder()
                 .startDate(rentalDto.getStartDate())
                 .endDate(rentalDto.getEndDate())
-                //.users(rentalDto.getUsers())
+                .users(userListConverter.fromDtoListToEntityList(rentalDto.getUsers()))
                 .cars(carListConverter.fromDtoListToEntityList(rentalDto.getCars()))
                 .build();
     }
