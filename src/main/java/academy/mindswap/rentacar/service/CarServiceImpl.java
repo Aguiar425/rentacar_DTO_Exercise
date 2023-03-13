@@ -1,6 +1,5 @@
 package academy.mindswap.rentacar.service;
 
-import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.CarUpdateDto;
@@ -20,7 +19,6 @@ public class CarServiceImpl implements CarService{
 
     private CarRepository carRepository;
     CarMapper carMapper;
-    //private CarConverter carConverter;
 
 
     @Autowired

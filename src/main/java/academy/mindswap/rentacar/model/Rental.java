@@ -32,4 +32,8 @@ public class Rental {
 
     @ManyToOne(targetEntity = Car.class, fetch = FetchType.EAGER)
     private Car car;
+
+    public Car getCar() {
+        return car;
+    }
 }

@@ -1,9 +1,9 @@
 package academy.mindswap.rentacar.service;
 
-import academy.mindswap.rentacar.converter.UserConverter;
 import academy.mindswap.rentacar.dto.UserCreatedDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
+import academy.mindswap.rentacar.mapper.UserMapper;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +17,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
-    private UserConverter userConverter;
+    UserMapper userMapper;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserConverter userConverter){
+    public UserServiceImpl(UserRepository userRepository){
         this.userRepository = userRepository;
-        this.userConverter = userConverter;
     }
 
 
@@ -31,9 +30,9 @@ public class UserServiceImpl implements UserService{
         if(!userCreatedDto.getPassword().equals(userCreatedDto.getRetypedPassword())){
             throw new IllegalArgumentException("Passwords do not match");
         }
-        User user = userConverter.fromUserCreatedDtoToEntity(userCreatedDto);
+        User user = userMapper.fromUserCreatedDtoToUserEntity(userCreatedDto);
         user = userRepository.save(user);
-        return userConverter.fromUserEntityToUserDto(user);
+        return userMapper.fromUserEntityToUserDto(user);
     }
 
     @Override
@@ -41,14 +40,14 @@ public class UserServiceImpl implements UserService{
         //Optional<User> user = userRepository.findById(userId);
         //return userConverter.fromUserEntityToUserDto(user);
         User user = userRepository.getReferenceById(userId);
-        return userConverter.fromUserEntityToUserDto(user);
+        return userMapper.fromUserEntityToUserDto(user);
     }
 
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         List<UserDto> userDtos = users.stream()
-                .map(userConverter::fromUserEntityToUserDto)
+                .map(userMapper::fromUserEntityToUserDto)
                 .toList();
         return userDtos;
         /*return userRepository.findAll().stream()
@@ -74,7 +73,7 @@ public class UserServiceImpl implements UserService{
         }
 
         User updatedUser = userRepository.save(userToUpdate);
-        UserDto updatedUserDto = userConverter.fromUserEntityToUserDto(updatedUser);
+        UserDto updatedUserDto = userMapper.fromUserEntityToUserDto(updatedUser);
         return updatedUserDto;
     }
 

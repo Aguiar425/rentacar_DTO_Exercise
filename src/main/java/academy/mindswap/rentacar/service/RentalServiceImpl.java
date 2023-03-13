@@ -1,13 +1,10 @@
 package academy.mindswap.rentacar.service;
 
-import academy.mindswap.rentacar.converter.*;
 import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.dto.RentalUpdateDto;
-import academy.mindswap.rentacar.dto.UserDto;
-import academy.mindswap.rentacar.model.Car;
+import academy.mindswap.rentacar.mapper.RentalMapper;
 import academy.mindswap.rentacar.model.Rental;
-import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +18,11 @@ import java.util.List;
 @Service
 public class RentalServiceImpl implements RentalService {
     private RentalRepository rentalRepository;
-    private RentalConverter rentalConverter;
-
+    RentalMapper rentalMapper;
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository, RentalConverter rentalConverter) {
+    public RentalServiceImpl(RentalRepository rentalRepository) {
         this.rentalRepository = rentalRepository;
-        this.rentalConverter = rentalConverter;
-
     }
 
     @Override
@@ -36,22 +30,22 @@ public class RentalServiceImpl implements RentalService {
         //TODO logic for cars and users
 
 
-        Rental rental = rentalConverter.fromRentalCreatedDtoToEntity(rentalCreatedDto);
+        Rental rental = rentalMapper.fromRentalCreatedDtoToRentalEntity(rentalCreatedDto);
         rental = rentalRepository.save(rental);
-        return rentalConverter.fromRentalEntityToRentalDto(rental);
+        return rentalMapper.fromRentalEntityToRentalDto(rental);
     }
 
     @Override
     public RentalDto getRentalById(Long rentalId) {
         Rental rental = rentalRepository.getReferenceById(rentalId);
-        return rentalConverter.fromRentalEntityToRentalDto(rental);
+        return rentalMapper.fromRentalEntityToRentalDto(rental);
     }
 
     @Override
     public List<RentalDto> getAllRentals() {
         List<Rental> rentals = rentalRepository.findAll();
         List<RentalDto> rentalDtos = rentals.stream()
-                .map(rentalConverter::fromRentalEntityToRentalDto)
+                .map(rentalMapper::fromRentalEntityToRentalDto)
                 .toList();
         return rentalDtos;
     }
@@ -78,7 +72,7 @@ public class RentalServiceImpl implements RentalService {
         }
 
         Rental updatedRental = rentalRepository.save(rentalToUpdate);
-        RentalDto updatedRentalDto = rentalConverter.fromRentalEntityToRentalDto(updatedRental);
+        RentalDto updatedRentalDto = rentalMapper.fromRentalEntityToRentalDto(updatedRental);
         return updatedRentalDto;
     }
 

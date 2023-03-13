@@ -5,7 +5,6 @@ import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.model.Car;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CarMapper {
