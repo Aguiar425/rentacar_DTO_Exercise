@@ -1,9 +1,13 @@
 package academy.mindswap.rentacar.service;
 
+import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.RentalCreatedDto;
 import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.dto.RentalUpdateDto;
+import academy.mindswap.rentacar.exceptions.CarNotFoundException;
+import academy.mindswap.rentacar.exceptions.RentalNotFoundException;
 import academy.mindswap.rentacar.mapper.RentalMapper;
+import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.model.Rental;
 import academy.mindswap.rentacar.repository.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RentalServiceImpl implements RentalService {
@@ -36,10 +41,16 @@ public class RentalServiceImpl implements RentalService {
         return rentalMapper.fromRentalEntityToRentalDto(rental);
     }
 
-    @Override
+/*    @Override
     public RentalDto getRentalById(Long rentalId) {
         Rental rental = rentalRepository.getReferenceById(rentalId);
         return rentalMapper.fromRentalEntityToRentalDto(rental);
+    }*/
+
+    @Override
+    public RentalDto getRentalById(Long rentalId) {
+        Optional<Rental> optionalRental = rentalRepository.findById(rentalId);
+        return optionalRental.map(rentalMapper::fromRentalEntityToRentalDto).orElseThrow(() -> new RentalNotFoundException());
     }
 
     @Override

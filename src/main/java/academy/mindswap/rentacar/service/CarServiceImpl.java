@@ -14,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService{
@@ -38,15 +39,14 @@ public class CarServiceImpl implements CarService{
 /*    @Override
     public CarDto getCarById(Long carId) {
         Car car = carRepository.getReferenceById(carId);
-            return carMapper.fromCarEntityToCarDto(car);
-        }*/
+        return carMapper.fromCarEntityToCarDto(car);
+    }*/
 
     @Override
     public CarDto getCarById(Long carId) {
-        Car car = carRepository.getReferenceById(carId);
-        return carMapper.fromCarEntityToCarDto(car);
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        return optionalCar.map(carMapper::fromCarEntityToCarDto).orElseThrow(() -> new CarNotFoundException());
     }
-
 
     @Override
     public List<CarDto> getAllCars() {
