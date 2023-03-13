@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.controller;
 
 import academy.mindswap.rentacar.dto.*;
+import academy.mindswap.rentacar.exceptions.CarNotFoundException;
 import academy.mindswap.rentacar.service.CarService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarDto> getCarById(@PathVariable Long id){
+    public ResponseEntity<CarDto> getCarById(@PathVariable Long id) {
         CarDto carDto = carService.getCarById(id);
         return new ResponseEntity<>(carDto, HttpStatus.CREATED);
     }

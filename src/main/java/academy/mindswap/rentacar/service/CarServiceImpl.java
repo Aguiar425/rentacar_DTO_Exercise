@@ -3,6 +3,7 @@ package academy.mindswap.rentacar.service;
 import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.CarUpdateDto;
+import academy.mindswap.rentacar.exceptions.CarNotFoundException;
 import academy.mindswap.rentacar.mapper.CarMapper;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
@@ -34,11 +35,18 @@ public class CarServiceImpl implements CarService{
         return carMapper.fromCarEntityToCarDto(savedCar);
     }
 
+/*    @Override
+    public CarDto getCarById(Long carId) {
+        Car car = carRepository.getReferenceById(carId);
+            return carMapper.fromCarEntityToCarDto(car);
+        }*/
+
     @Override
     public CarDto getCarById(Long carId) {
         Car car = carRepository.getReferenceById(carId);
         return carMapper.fromCarEntityToCarDto(car);
     }
+
 
     @Override
     public List<CarDto> getAllCars() {

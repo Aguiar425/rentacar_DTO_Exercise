@@ -15,4 +15,10 @@ public class LoggingAspect {
     public void logBeforeAdd(JoinPoint joinPoint){
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");
     }
+
+    @AfterReturning(pointcut = "execution( * academy.mindswap.rentacar.controller.*.*(..))", returning = "result")
+    public void logAfterHelloList(JoinPoint joinPoint, Object result) {
+        logger.info("After " + joinPoint.getSignature().getName() + " method call");
+        logger.info("Response: " + result);
+    }
 }
