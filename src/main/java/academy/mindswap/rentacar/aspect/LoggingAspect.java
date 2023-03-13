@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class LoggingAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Before("execution( * academy.mindswap.rentacar.service.*.*(..)")
+    @Before("execution( * academy.mindswap.rentacar.controller.*.*(..))")
     public void logBeforeAdd(JoinPoint joinPoint){
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");
     }

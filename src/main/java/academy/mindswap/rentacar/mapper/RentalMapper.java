@@ -11,4 +11,13 @@ public interface RentalMapper {
     RentalDto fromRentalEntityToRentalDto(Rental rental);
     Rental fromRentalCreatedDtoToRentalEntity(RentalCreatedDto rentalCreatedDto);
 
+//    default RentalDto fromRentalEntityToRentalDto(Rental rental){
+//        return RentalDto.builder()
+//                .startDate(rental.getStartDate())
+//                .endDate(rental.getEndDate())
+//                .user(rental.getUser().getFirstName() + " ".concat(rental.getUser().getLastName()))
+//                .car(rental.getCar().getBrand() + " ".concat(rental.getCar().getModel()))
+//                .build();
+//    }
+
 }

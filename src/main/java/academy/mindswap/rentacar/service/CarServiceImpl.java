@@ -22,23 +22,22 @@ public class CarServiceImpl implements CarService{
 
 
     @Autowired
-    public CarServiceImpl(/*CarRepository carRepository, CarConverter carConverter*/){
-        /*this.carRepository = carRepository;
-        this.carConverter = carConverter;*/
+    public CarServiceImpl(CarRepository carRepository, CarMapper carMapper){
+        this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
     @Override
     public CarDto createCar(CarCreatedDto carCreatedDto) {
-        return carMapper.carCreatedDtoToCarDto(carCreatedDto);
-        /*Car savedCar = carConverter.fromCarCreatedDtoToEntity(carCreatedDto);
+        Car savedCar = carMapper.fromCarCreatedDtoToCarEntity(carCreatedDto);
         savedCar = carRepository.save(savedCar);
-        return carConverter.fromCarEntityToCarDto(savedCar);*/
+        return carMapper.fromCarEntityToCarDto(savedCar);
     }
 
     @Override
     public CarDto getCarById(Long carId) {
         Car car = carRepository.getReferenceById(carId);
-        return carMapper.carEntityToCarDto(car);
+        return carMapper.fromCarEntityToCarDto(car);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class CarServiceImpl implements CarService{
 
         for (Car car :
                 cars) {
-            carDtos.add(carMapper.carEntityToCarDto(car));
+            carDtos.add(carMapper.fromCarEntityToCarDto(car));
         }
         return carDtos;
     }
@@ -71,7 +70,7 @@ public class CarServiceImpl implements CarService{
         }
 
         Car updatedCar = carRepository.save(carToUpdate);
-        CarDto updatedCarDto = carMapper.carEntityToCarDto(updatedCar);
+        CarDto updatedCarDto = carMapper.fromCarEntityToCarDto(updatedCar);
         return updatedCarDto;
     }
 

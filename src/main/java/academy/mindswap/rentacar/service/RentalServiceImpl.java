@@ -21,8 +21,9 @@ public class RentalServiceImpl implements RentalService {
     RentalMapper rentalMapper;
 
     @Autowired
-    public RentalServiceImpl(RentalRepository rentalRepository) {
+    public RentalServiceImpl(RentalRepository rentalRepository, RentalMapper rentalMapper) {
         this.rentalRepository = rentalRepository;
+        this.rentalMapper = rentalMapper;
     }
 
     @Override

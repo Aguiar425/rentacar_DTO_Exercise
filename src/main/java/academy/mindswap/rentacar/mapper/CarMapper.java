@@ -9,10 +9,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface CarMapper {
 
-    CarDto carEntityToCarDto(Car car);
-    CarDto carCreatedDtoToCarDto(CarCreatedDto carCreatedDto);
-    Car carDtoToCarEntity(CarDto carDto);
-    Car carCreatedDtoToCarEntity(CarCreatedDto carCreatedDto);
+    CarDto fromCarEntityToCarDto(Car car);
+    CarDto fromCarCreatedDtoToCarDto(CarCreatedDto carCreatedDto);
+    Car fromCarDtoToCarEntity(CarDto carDto);
+    Car fromCarCreatedDtoToCarEntity(CarCreatedDto carCreatedDto);
 
 /*    @Mapping(target = "brand", source = "entity.brand")
     @Mapping(target = "model", source = "entity.model")
