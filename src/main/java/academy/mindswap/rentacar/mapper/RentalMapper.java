@@ -5,11 +5,11 @@ import academy.mindswap.rentacar.dto.RentalDto;
 import academy.mindswap.rentacar.model.Rental;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper (componentModel = "spring")
 public interface RentalMapper {
 
     RentalDto fromRentalEntityToRentalDto(Rental rental);
-    Rental fromRentalCreatedDtoToRentalEntity(RentalCreatedDto rentalCreatedDto);
+   Rental fromRentalCreatedDtoToRentalEntity(RentalCreatedDto rentalCreatedDto);
 
 //    default RentalDto fromRentalEntityToRentalDto(Rental rental){
 //        return RentalDto.builder()
