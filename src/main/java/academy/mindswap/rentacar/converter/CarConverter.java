@@ -2,11 +2,15 @@ package academy.mindswap.rentacar.converter;
 
 import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
+import academy.mindswap.rentacar.mapper.CarMapper;
 import academy.mindswap.rentacar.model.Car;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CarConverter {
+public class CarConverter{
+
+
     public CarDto fromCarEntityToCarDto(Car car){
         return CarDto.builder()
                 .brand(car.getBrand())

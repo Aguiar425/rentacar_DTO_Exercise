@@ -4,6 +4,7 @@ import academy.mindswap.rentacar.converter.CarConverter;
 import academy.mindswap.rentacar.dto.CarCreatedDto;
 import academy.mindswap.rentacar.dto.CarDto;
 import academy.mindswap.rentacar.dto.CarUpdateDto;
+import academy.mindswap.rentacar.mapper.CarMapper;
 import academy.mindswap.rentacar.model.Car;
 import academy.mindswap.rentacar.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,39 +12,46 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CarServiceImpl implements CarService{
 
     private CarRepository carRepository;
-    private CarConverter carConverter;
+    CarMapper carMapper;
+    //private CarConverter carConverter;
+
 
     @Autowired
-    public CarServiceImpl(CarRepository carRepository, CarConverter carConverter){
-        this.carRepository = carRepository;
-        this.carConverter = carConverter;
+    public CarServiceImpl(/*CarRepository carRepository, CarConverter carConverter*/){
+        /*this.carRepository = carRepository;
+        this.carConverter = carConverter;*/
     }
 
     @Override
     public CarDto createCar(CarCreatedDto carCreatedDto) {
-        Car savedCar = carConverter.fromCarCreatedDtoToEntity(carCreatedDto);
+        return carMapper.carCreatedDtoToCarDto(carCreatedDto);
+        /*Car savedCar = carConverter.fromCarCreatedDtoToEntity(carCreatedDto);
         savedCar = carRepository.save(savedCar);
-        return carConverter.fromCarEntityToCarDto(savedCar);
+        return carConverter.fromCarEntityToCarDto(savedCar);*/
     }
 
     @Override
     public CarDto getCarById(Long carId) {
         Car car = carRepository.getReferenceById(carId);
-        return carConverter.fromCarEntityToCarDto(car);
+        return carMapper.carEntityToCarDto(car);
     }
 
     @Override
     public List<CarDto> getAllCars() {
         List<Car> cars = carRepository.findAll();
-        List<CarDto> carDtos = cars.stream()
-                .map(carConverter::fromCarEntityToCarDto)
-                .toList();
+        List<CarDto> carDtos = new ArrayList<>();
+
+        for (Car car :
+                cars) {
+            carDtos.add(carMapper.carEntityToCarDto(car));
+        }
         return carDtos;
     }
 
@@ -65,7 +73,7 @@ public class CarServiceImpl implements CarService{
         }
 
         Car updatedCar = carRepository.save(carToUpdate);
-        CarDto updatedCarDto = carConverter.fromCarEntityToCarDto(updatedCar);
+        CarDto updatedCarDto = carMapper.carEntityToCarDto(updatedCar);
         return updatedCarDto;
     }
 
