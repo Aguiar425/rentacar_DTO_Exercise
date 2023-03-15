@@ -63,4 +63,17 @@ public class UserController {
         UserDto updatedUser = userService.updateUser(id, userUpdateDto);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
+    @PatchMapping("/makeadmin/{id}")
+    public ResponseEntity<UserDto> makeAdmin(@PathVariable Long id, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            for (FieldError error : fieldErrors){
+                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
+            }
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        UserDto updatedUser = userService.makeAdmin(id, userUpdateDto);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
 }

@@ -8,6 +8,7 @@ import academy.mindswap.rentacar.exceptions.CarNotFoundException;
 import academy.mindswap.rentacar.exceptions.UserNotFoundException;
 import academy.mindswap.rentacar.mapper.UserMapper;
 import academy.mindswap.rentacar.model.Car;
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.model.User;
 import academy.mindswap.rentacar.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,5 +94,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    @Override
+    public UserDto makeAdmin(Long userId, UserUpdateDto userUpdateDto) {
+        User userToUpdate = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found with ID: " + userId));
+
+        userToUpdate.setRole(Role.ADMIN);
+        User newAdminUser = userRepository.save(userToUpdate);
+        return userMapper.fromUserEntityToUserDto(newAdminUser);
     }
 }
