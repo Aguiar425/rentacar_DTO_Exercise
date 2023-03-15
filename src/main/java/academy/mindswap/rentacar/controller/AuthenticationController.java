@@ -1,5 +1,9 @@
-package academy.mindswap.rentacar.auth;
+package academy.mindswap.rentacar.controller;
 
+import academy.mindswap.rentacar.auth.AuthenticationRequest;
+import academy.mindswap.rentacar.auth.AuthenticationResponse;
+import academy.mindswap.rentacar.auth.AuthenticationService;
+import academy.mindswap.rentacar.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

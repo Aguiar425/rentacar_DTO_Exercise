@@ -32,11 +32,15 @@ public class LoggingAspect {
     @Around("execution(* academy.mindswap.rentacar.controller.*.*(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
-        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
+        logger.info("Before around " + joinPoint.getSignature().getName() + " method call");
         Object result = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
-        logger.info("After " + joinPoint.getSignature().getName() + " method call");
+        logger.info("After around" + joinPoint.getSignature().getName() + " method call");
         logger.info("Execution time of " + joinPoint.getSignature().getName() + " method call: " + (endTime - startTime) + " milliseconds");
         return result;
+    }
+    @Before("execution(* academy.mindswap.rentacar.config.LogoutService.*(..))")
+    public void logBeforeLogout(JoinPoint joinPoint){
+        logger.info("Before " + joinPoint.getSignature().getName() + " method call");
     }
 }
