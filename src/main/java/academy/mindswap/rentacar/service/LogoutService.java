@@ -1,4 +1,4 @@
-package academy.mindswap.rentacar.config;
+package academy.mindswap.rentacar.service;
 
 import academy.mindswap.rentacar.repository.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;

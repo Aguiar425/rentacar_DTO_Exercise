@@ -1,7 +1,9 @@
-package academy.mindswap.rentacar.auth;
+package academy.mindswap.rentacar.service;
 
 
-import academy.mindswap.rentacar.config.*;
+import academy.mindswap.rentacar.auth.AuthenticationRequest;
+import academy.mindswap.rentacar.auth.AuthenticationResponse;
+import academy.mindswap.rentacar.auth.RegisterRequest;
 import academy.mindswap.rentacar.model.*;
 import academy.mindswap.rentacar.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,21 @@ public class AuthenticationService {
     return AuthenticationResponse.builder()
         .token(jwtToken)
         .build();
+  }
+  public AuthenticationResponse adminRegister(RegisterRequest request) {
+    var user = User.builder()
+            .firstName(request.getFirstName())
+            .lastName(request.getLastName())
+            .email(request.getEmail())
+            .password(passwordEncoder.encode(request.getPassword()))
+            .role(Role.ADMIN)
+            .build();
+    var savedUser = repository.save(user);
+    var jwtToken = jwtService.generateToken(user);
+    saveUserToken(savedUser, jwtToken);
+    return AuthenticationResponse.builder()
+            .token(jwtToken)
+            .build();
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {

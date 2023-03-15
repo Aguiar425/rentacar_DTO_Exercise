@@ -39,7 +39,7 @@ public class LoggingAspect {
         logger.info("Execution time of " + joinPoint.getSignature().getName() + " method call: " + (endTime - startTime) + " milliseconds");
         return result;
     }
-    @Before("execution(* academy.mindswap.rentacar.config.LogoutService.*(..))")
+    @Before("execution(* academy.mindswap.rentacar.service.LogoutService.*(..))")
     public void logBeforeLogout(JoinPoint joinPoint){
         logger.info("Before " + joinPoint.getSignature().getName() + " method call");
     }

@@ -2,7 +2,7 @@ package academy.mindswap.rentacar.controller;
 
 import academy.mindswap.rentacar.auth.AuthenticationRequest;
 import academy.mindswap.rentacar.auth.AuthenticationResponse;
-import academy.mindswap.rentacar.auth.AuthenticationService;
+import academy.mindswap.rentacar.service.AuthenticationService;
 import academy.mindswap.rentacar.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,13 @@ public class AuthenticationController {
   ) {
     return ResponseEntity.ok(service.register(request));
   }
+  @PostMapping("/adminRegister")
+  public ResponseEntity<AuthenticationResponse> adminRegister(
+          @RequestBody RegisterRequest request
+  ) {
+    return ResponseEntity.ok(service.adminRegister(request));
+  }
+
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody AuthenticationRequest request

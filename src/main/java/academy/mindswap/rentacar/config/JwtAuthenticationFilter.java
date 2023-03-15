@@ -1,6 +1,7 @@
 package academy.mindswap.rentacar.config;
 
 import academy.mindswap.rentacar.repository.TokenRepository;
+import academy.mindswap.rentacar.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package academy.mindswap.rentacar.config;
+package academy.mindswap.rentacar.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
