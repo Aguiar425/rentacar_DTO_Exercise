@@ -35,7 +35,7 @@ public class LoggingAspect {
         logger.info("Before around " + joinPoint.getSignature().getName() + " method call");
         Object result = joinPoint.proceed();
         long endTime = System.currentTimeMillis();
-        logger.info("After around" + joinPoint.getSignature().getName() + " method call");
+        logger.info("After around " + joinPoint.getSignature().getName() + " method call");
         logger.info("Execution time of " + joinPoint.getSignature().getName() + " method call: " + (endTime - startTime) + " milliseconds");
         return result;
     }
