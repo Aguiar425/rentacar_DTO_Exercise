@@ -90,19 +90,9 @@ public class UserServiceImpl implements UserService{
         return updatedUserDto;
     }
 
-
     @Override
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
 
-    @Override
-    public UserDto makeAdmin(Long userId) {
-        User userToUpdate = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user found with ID: " + userId));
-
-        userToUpdate.setRole(Role.ADMIN);
-        User newAdminUser = userRepository.save(userToUpdate);
-        return userMapper.fromUserEntityToUserDto(newAdminUser);
-    }
 }
