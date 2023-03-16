@@ -1,6 +1,5 @@
 package academy.mindswap.rentacar.config;
 
-import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.repository.TokenRepository;
 import academy.mindswap.rentacar.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -86,7 +85,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return true;
             } else {
-                boolean clientLimits = path.startsWith("/car") || path.startsWith("/rental") || path.startsWith("/admin");
+                boolean clientLimits = path.startsWith("/car") || path.startsWith("/rental") || path.startsWith("/admin") || path.startsWith("/user/all");
                 if (clientLimits) {
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                     response.getWriter().write("Access denied");

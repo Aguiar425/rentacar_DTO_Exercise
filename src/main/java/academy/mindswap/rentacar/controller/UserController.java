@@ -37,19 +37,6 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-/*    @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserCreatedDto userCreatedDto, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-            for (FieldError error : fieldErrors){
-                System.out.println(error.getObjectName() + " - " + error.getDefaultMessage());
-            }
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        UserDto savedUser = userService.createUser(userCreatedDto);
-        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-    }*/
-
     @PatchMapping("/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDto userUpdateDto, BindingResult bindingResult) {
         if(bindingResult.hasErrors()){
