@@ -58,6 +58,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authToken);
       }
     }
+    else if (SecurityContextHolder.getContext().getAuthentication() != null) {
+      UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+        if (path.startsWith("/admin")) {
+          filterChain.doFilter(request, response);
+          return;
+        }
+      }
+    }
     filterChain.doFilter(request, response);
   }
+
 }

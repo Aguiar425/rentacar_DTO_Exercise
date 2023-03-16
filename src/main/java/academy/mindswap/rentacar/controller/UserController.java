@@ -63,11 +63,4 @@ public class UserController {
         UserDto updatedUser = userService.updateUser(id, userUpdateDto);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
-
-    @PatchMapping("/makeadmin/{id}")
-    public ResponseEntity<UserDto> makeAdmin(@PathVariable Long id){
-        Long userId = id;
-        UserDto updatedUser = userService.makeAdmin(userId);
-        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-    }
 }
