@@ -72,7 +72,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
           }
         } else if (path.startsWith("/admin")) {
-          response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied");
+          response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+          response.getWriter().write("Access denied");
           return;
         }
       }
