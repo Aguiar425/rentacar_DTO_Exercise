@@ -33,4 +33,18 @@ public class AdminController {
         UserDto updatedUser = adminService.makeAdmin(userId);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
+
+    @DeleteMapping("/deleteuser/{id}")
+    public ResponseEntity<UserDto> deleteUser(@PathVariable Long id){
+        Long userId = id;
+        adminService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/deletecar/{id}")
+    public ResponseEntity<UserDto> deleteCar(@PathVariable Long id){
+        Long carId = id;
+        adminService.deleteCar(carId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

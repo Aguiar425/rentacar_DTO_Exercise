@@ -31,17 +31,6 @@ public class UserServiceImpl implements UserService{
         this.userMapper = userMapper;
     }
 
-
-/*    @Override
-    public UserDto createUser(UserCreatedDto userCreatedDto) {
-        if(!userCreatedDto.getPassword().equals(userCreatedDto.getRetypedPassword())){
-            throw new IllegalArgumentException("Passwords do not match");
-        }
-        User user = userMapper.fromUserCreatedDtoToUserEntity(userCreatedDto);
-        user = userRepository.save(user);
-        return userMapper.fromUserEntityToUserDto(user);
-    }*/
-
     @Override
     public UserDto getUserById(Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
@@ -78,10 +67,4 @@ public class UserServiceImpl implements UserService{
         UserDto updatedUserDto = userMapper.fromUserEntityToUserDto(updatedUser);
         return updatedUserDto;
     }
-
-    @Override
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
-    }
-
 }

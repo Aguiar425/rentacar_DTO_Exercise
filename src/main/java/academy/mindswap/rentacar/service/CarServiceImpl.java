@@ -81,9 +81,4 @@ public class CarServiceImpl implements CarService{
         CarDto updatedCarDto = carMapper.fromCarEntityToCarDto(updatedCar);
         return updatedCarDto;
     }
-
-    @Override
-    public void deleteCar(Long carId) {
-        carRepository.deleteById(carId);
-    }
 }

@@ -17,5 +17,4 @@ public interface CarService {
 
     CarDto updateCar(Long carId, CarUpdateDto carUpdateDto);
 
-    void deleteCar(Long carId);
 }
