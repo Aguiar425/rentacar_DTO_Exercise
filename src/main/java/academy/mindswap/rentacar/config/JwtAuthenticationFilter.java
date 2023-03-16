@@ -1,5 +1,6 @@
 package academy.mindswap.rentacar.config;
 
+import academy.mindswap.rentacar.model.Role;
 import academy.mindswap.rentacar.repository.TokenRepository;
 import academy.mindswap.rentacar.service.JwtService;
 import jakarta.servlet.FilterChain;
@@ -28,14 +29,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(
-      @NonNull HttpServletRequest request,
-      @NonNull HttpServletResponse response,
-      @NonNull FilterChain filterChain
+          @NonNull HttpServletRequest request,
+          @NonNull HttpServletResponse response,
+          @NonNull FilterChain filterChain
   ) throws ServletException, IOException {
     final String authHeader = request.getHeader("Authorization");
     final String jwt;
     final String userEmail;
-    if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+    if (authHeader == null || !authHeader.startsWith("Bearer ")) {
       filterChain.doFilter(request, response);
       return;
     }
@@ -44,31 +45,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
       UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
       Boolean isTokenValid = tokenRepository.findByToken(jwt)
-          .map(t -> !t.isExpired() && !t.isRevoked())
-          .orElse(false);
+              .map(t -> !t.isExpired() && !t.isRevoked())
+              .orElse(false);
       if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-            userDetails,
-            null,
-            userDetails.getAuthorities()
+                userDetails,
+                null,
+                userDetails.getAuthorities()
         );
         authToken.setDetails(
-            new WebAuthenticationDetailsSource().buildDetails(request)
+                new WebAuthenticationDetailsSource().buildDetails(request)
         );
         SecurityContextHolder.getContext().setAuthentication(authToken);
       }
     }
-    else if (SecurityContextHolder.getContext().getAuthentication() != null) {
+    if (SecurityContextHolder.getContext().getAuthentication() != null) {
       UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+      Boolean isTokenValid = tokenRepository.findByToken(jwt)
+              .map(t -> !t.isExpired() && !t.isRevoked())
+              .orElse(false);
+      if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
         String path = request.getRequestURI().substring(request.getContextPath().length());
-        if (path.startsWith("/admin")) {
-          filterChain.doFilter(request, response);
+        if (userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+          if (path.startsWith("/admin")) {
+            filterChain.doFilter(request, response);
+            return;
+          }
+        } else if (path.startsWith("/admin")) {
+          response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied");
           return;
         }
       }
     }
     filterChain.doFilter(request, response);
   }
-
 }
