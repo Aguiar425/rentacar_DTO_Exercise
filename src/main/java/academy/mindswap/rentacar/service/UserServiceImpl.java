@@ -32,21 +32,13 @@ public class UserServiceImpl implements UserService{
     }
 
 
-    @Override
+/*    @Override
     public UserDto createUser(UserCreatedDto userCreatedDto) {
         if(!userCreatedDto.getPassword().equals(userCreatedDto.getRetypedPassword())){
             throw new IllegalArgumentException("Passwords do not match");
         }
         User user = userMapper.fromUserCreatedDtoToUserEntity(userCreatedDto);
         user = userRepository.save(user);
-        return userMapper.fromUserEntityToUserDto(user);
-    }
-
-/*    @Override
-    public UserDto getUserById(Long userId) {
-        //Optional<User> user = userRepository.findById(userId);
-        //return userConverter.fromUserEntityToUserDto(user);
-        User user = userRepository.getReferenceById(userId);
         return userMapper.fromUserEntityToUserDto(user);
     }*/
 
@@ -63,9 +55,6 @@ public class UserServiceImpl implements UserService{
                 .map(userMapper::fromUserEntityToUserDto)
                 .toList();
         return userDtos;
-        /*return userRepository.findAll().stream()
-                .map(userConverter::fromUserEntityToUserDto)
-                .toList();*/
     }
 
     @Override
