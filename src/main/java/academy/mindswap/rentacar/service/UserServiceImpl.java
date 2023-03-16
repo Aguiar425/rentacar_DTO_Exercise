@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserDto getUserByEmail(String userEmail) {
+        Optional<User> optionalUser = userRepository.findByEmail(userEmail);
+        return optionalUser.map(userMapper::fromUserEntityToUserDto).orElseThrow(() -> new UserNotFoundException());
+    }
+
+    @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
         List<UserDto> userDtos = users.stream()

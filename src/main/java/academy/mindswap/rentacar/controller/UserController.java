@@ -1,13 +1,19 @@
 package academy.mindswap.rentacar.controller;
 
+import academy.mindswap.rentacar.config.JwtAuthenticationFilter;
 import academy.mindswap.rentacar.dto.UserCreatedDto;
 import academy.mindswap.rentacar.dto.UserDto;
 import academy.mindswap.rentacar.dto.UserUpdateDto;
+import academy.mindswap.rentacar.model.User;
+import academy.mindswap.rentacar.repository.TokenRepository;
+import academy.mindswap.rentacar.service.JwtService;
 import academy.mindswap.rentacar.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +29,12 @@ public class UserController {
     @Autowired
     public UserController(UserService userService){
         this.userService = userService;
+    }
+
+    @GetMapping("")
+    public ResponseEntity<UserDto> getOwnInfo(){
+        UserDto userDto = userService.getUserByEmail(JwtAuthenticationFilter.getUserEmail());
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @GetMapping("/all")

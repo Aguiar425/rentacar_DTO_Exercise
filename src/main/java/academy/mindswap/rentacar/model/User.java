@@ -42,7 +42,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Token> tokens;
 
     @OneToMany (mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
@@ -77,5 +78,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<Token> getTokens() {
+        return null;
     }
 }

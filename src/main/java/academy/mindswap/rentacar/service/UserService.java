@@ -11,6 +11,7 @@ public interface UserService {
     //UserDto createUser(UserCreatedDto userCreatedDto);
 
     UserDto getUserById(Long userId);
+    UserDto getUserByEmail(String userEmail);
 
     List<UserDto> getAllUsers();
 

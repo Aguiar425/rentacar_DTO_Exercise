@@ -1,5 +1,6 @@
 package academy.mindswap.rentacar.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,12 @@ public class Token {
 
   public boolean expired;
 
-  @ManyToOne
+  @ManyToOne( fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
+
   public User user;
+
+  public User getUser(){
+    return null;
+  }
 }
