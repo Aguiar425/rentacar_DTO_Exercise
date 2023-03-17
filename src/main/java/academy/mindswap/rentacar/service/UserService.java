@@ -16,4 +16,5 @@ public interface UserService {
 
     UserDto updateUser(Long userId, UserUpdateDto userUpdateDto);
 
+    UserDto getUserByEmail(String userEmail);
 }

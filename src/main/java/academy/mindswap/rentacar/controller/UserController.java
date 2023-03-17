@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -49,5 +50,12 @@ public class UserController {
 
         UserDto updatedUser = userService.updateUser(id, userUpdateDto);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<UserDto> showInfo(Principal principal) {
+        String userEmail = principal.getName();
+        UserDto userDto = userService.getUserByEmail(userEmail);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 }
